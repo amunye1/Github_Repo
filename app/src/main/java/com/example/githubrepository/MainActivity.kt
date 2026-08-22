@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
                     when (val result = viewModel.searchResult) {
-                        is DataResult.Loading -> {
+                        null, is DataResult.Loading -> {
                             Text("Loading...", modifier = Modifier.padding(padding))
                         }
                         is DataResult.Success -> {

@@ -16,7 +16,7 @@ import javax.inject.Inject
 class GithubViewmodel @Inject constructor
     (private val repository: GithubRepository) : ViewModel() {
 
-    var searchResult by mutableStateOf<DataResult<GithubSearchResults>>(DataResult.Loading)
+    var searchResult by mutableStateOf<DataResult<GithubSearchResults>?>(null)
         private set
 
     fun searchRepositories() {
