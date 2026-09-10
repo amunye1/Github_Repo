@@ -19,16 +19,17 @@ class GithubViewmodel @Inject constructor
     var searchResult by mutableStateOf<DataResult<GithubSearchResults>?>(null)
         private set
 
-    fun searchRepositories() {
+    fun searchRepositories(query: String) {
         viewModelScope.launch {
             searchResult = DataResult.Loading
-            searchResult = try {
-                repository.search("react", 1)
-            } catch (e: IOException) {
-                DataResult.Error(e.message ?: "Network error")
-            } catch (e: retrofit2.HttpException) {
-                DataResult.Error(e.message ?: "HTTP error")
-            }
+            searchResult =
+                try {
+                    repository.search(query = query, 1)
+                } catch (e: IOException){
+                    DataResult.Error(e.message ?:"Network error")
+                }catch (e: retrofit2.HttpException){
+                    DataResult.Error(e.message ?: "Http error")
+                }
         }
     }
 }
