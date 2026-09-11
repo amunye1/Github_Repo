@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -73,13 +74,13 @@ class MainActivity : ComponentActivity() {
                         }
 
                         when (val result = viewModel.searchResult) {
-                            null -> Text("Type something and press Search")
+                            null ,DataResult.Idle -> Text("Type something and press Search")
                             is DataResult.Loading -> {
                                 Text("Loading...", modifier = Modifier.padding(padding))
                             }
                             is DataResult.Success -> {
                                 LazyColumn() {
-                                    items(result.data.items) { repo ->
+                                    items(result.data.items, key= {it.id }) { repo ->
                                         Text(repo.fullName)
                                         repo.description?.let { Text(it) }
                                         Text(repo.owner.avatarUrl)
