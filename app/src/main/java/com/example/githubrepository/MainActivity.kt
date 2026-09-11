@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
                                     }
 
                                 },
-                                modifier =Modifier.padding()
+
 
                             ){
                                 Text("Search")
@@ -78,9 +78,13 @@ class MainActivity : ComponentActivity() {
                                 Text("Loading...", modifier = Modifier.padding(padding))
                             }
                             is DataResult.Success -> {
-                                LazyColumn(modifier = Modifier.padding(padding)) {
+                                LazyColumn() {
                                     items(result.data.items) { repo ->
                                         Text(repo.fullName)
+                                        repo.description?.let { Text(it) }
+                                        Text(repo.owner.avatarUrl)
+                                        Text(repo.stargazersCount.toString())
+                                        Text(repo.language.toString())
                                     }
                                 }
                             }
