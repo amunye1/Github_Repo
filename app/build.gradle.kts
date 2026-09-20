@@ -4,8 +4,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("kapt")
     alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.ksp)
 }
 
 
@@ -44,6 +44,8 @@ android {
 }
 
 dependencies {
+    val room_version = "3.0.2"
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.retrofit)
@@ -52,8 +54,8 @@ dependencies {
 
     // Dagger - Hilt
     implementation(libs.hilt.android)
-    "kapt"(libs.hilt.compiler)
-    "kapt"("androidx.hilt:hilt-compiler:1.4.0")
+    ksp(libs.hilt.compiler)
+    ksp("androidx.hilt:hilt-compiler:1.4.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.4.0")
 
     implementation(libs.androidx.activity.compose)
@@ -70,4 +72,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation("androidx.room3:room3-runtime:${room_version}")
+    ksp("androidx.room3:room3-compiler:$room_version")
+
 }
