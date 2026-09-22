@@ -13,6 +13,7 @@ import com.example.githubrepository.network.SearchFields
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -70,7 +71,20 @@ class GithubViewmodel @Inject constructor
                     result
                 } catch (e: IOException){
                     isOffline = true
-                    DataResult.Error(e.message ?:"Network error")
+                    val cached = searchDb.getAllSearchOnce()
+                    if(cached.isNotEmpty()){
+                        DataResult.Success(
+                            GithubSearchResults(
+                              totalCount=cached.size,
+                             incompleteResults = false,
+                            items= cached.map { it.toRepoDto() }
+                            )
+                        )
+
+                    }
+                    else {
+                        DataResult.Error(e.message ?: "Network error")
+                    }
                 }catch (e: retrofit2.HttpException){
                     isOffline = false
                     DataResult.Error(e.message ?: "Http error")

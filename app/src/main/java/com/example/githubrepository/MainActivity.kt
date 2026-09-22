@@ -69,12 +69,19 @@ class MainActivity : ComponentActivity() {
 
                         }
 
+
+
+
                         when (val result = viewModel.searchResult) {
                             null ,DataResult.Idle -> Text("Type something and press Search")
                             is DataResult.Loading -> {
                                 Text("Loading...", modifier = Modifier.padding(padding))
                             }
                             is DataResult.Success -> {
+                                if(viewModel.isOffline){
+                                    Text("Offline - showing last saved results", modifier =
+                                        Modifier.padding(padding))
+                                }
                                 LazyColumn() {
                                     items(result.data.items, key= {it.id }) { repo ->
                                         Text(repo.fullName)

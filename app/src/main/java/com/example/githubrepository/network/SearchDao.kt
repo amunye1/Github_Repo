@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.Flow
 interface SearchDao {
     @Query("SELECT * FROM SearchFields")
     fun getAllSearch() : Flow<List<SearchFields>>
+    @Query("SELECT * FROM SearchFields")
+    suspend fun getAllSearchOnce() : List<SearchFields>
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     suspend fun addSearch(search: List<SearchFields>)
     @Query("Delete FROM SearchFields WHERE id = :id")

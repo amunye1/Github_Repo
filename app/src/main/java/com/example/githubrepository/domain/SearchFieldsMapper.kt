@@ -18,3 +18,17 @@ fun RepoDto.toSearchFields(): SearchFields {
         url = htmlUrl
     )
 }
+
+fun SearchFields.toRepoDto(): RepoDto {
+    return RepoDto(
+        id = id.toLong(),
+        name = name,
+        fullName = full_name,
+        description = description,
+        htmlUrl = html_url,
+        stargazersCount = stargazers_count,
+        forksCount = forks_count,
+        language = language,
+        owner = OwnerDto(login = "", avatarUrl = avart_url)
+    )
+}
