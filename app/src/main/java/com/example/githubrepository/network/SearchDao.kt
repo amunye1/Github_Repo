@@ -23,3 +23,24 @@ interface SearchDao {
     @Query("DELETE FROM SearchFields")
     suspend fun clearAll()
 }
+
+@Dao
+interface SelectedDao{
+    @Query("SELECT * FROM SelectedFields")
+    fun getAllSearch() : Flow<List<SearchFields>>
+    @Query("SELECT * FROM SelectedFields")
+    suspend fun getAllSearchOnce() : List<SearchFields>
+    @Insert
+    suspend fun addSearch(search: List<SelectedFields>)
+    @Query("Delete FROM SelectedFields WHERE id = :id")
+    suspend fun deleteSearch(id: Int)
+    @Query("Update SelectedFields SET name = :name WHERE id = :id")
+    suspend fun updateSearch(id: Int, name: String)
+
+    @Query("DELETE FROM SelectedFields")
+    suspend fun clearAll()
+
+    @Query("DELETE FROM SelectedFields where id = :id")
+    suspend fun clear(id:Int)
+
+}
