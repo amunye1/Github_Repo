@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.ksp)
+
 }
 
 
@@ -46,18 +47,20 @@ android {
 dependencies {
     val room_version = "3.0.2"
 
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.kotlinx.coroutines.android)
+    ksp(libs.glide.compiler)
 
     // Dagger - Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    ksp("androidx.hilt:hilt-compiler:1.4.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.4.0")
-
+    ksp(libs.androidx.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.compose)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
