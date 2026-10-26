@@ -1,13 +1,16 @@
-package com.example.githubrepository.domain
+package com.example.githubrepository.presentation.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.githubrepository.data.data.DataResult
+import com.example.githubrepository.domain.GithubSearchResults
 import com.example.githubrepository.domain.repository.GithubRepository
+import com.example.githubrepository.domain.toRepoDto
+import com.example.githubrepository.domain.toSearchFields
+import com.example.githubrepository.domain.toSelectedFields
 import com.example.githubrepository.network.SearchDao
 import com.example.githubrepository.network.SearchFields
 import com.example.githubrepository.network.SelectedDao
@@ -15,8 +18,8 @@ import com.example.githubrepository.network.SelectedFields
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
@@ -152,7 +155,7 @@ class GithubViewmodel @Inject constructor
                     else {
                         DataResult.Error(e.message ?: "Network error")
                     }
-                }catch (e: retrofit2.HttpException){
+                }catch (e: HttpException){
                     isOffline = false
                     DataResult.Error(e.message ?: "Http error")
                 }
